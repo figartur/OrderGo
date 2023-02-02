@@ -28,8 +28,6 @@ class VerifyNumActivity : AppCompatActivity() {
     private lateinit var resendToken : PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber : String
 
-    private var i = 1*1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_num)
