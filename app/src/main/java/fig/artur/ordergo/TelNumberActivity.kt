@@ -16,16 +16,19 @@ import kotlinx.android.synthetic.main.activity_tel_number.btn_continue
 import kotlinx.android.synthetic.main.activity_verify_num.*
 import java.util.concurrent.TimeUnit
 
+//TODO("https://stackoverflow.com/questions/53140930/android-progressbar-hiving-nullpointerexception-android-widget-progressbar-setvi")
+
 class TelNumberActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : FirebaseDatabase
-    private var number : String = et_phone_contact.text.toString().trim {it <= ' '}
+    private lateinit var number : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tel_number)
 
+        number = et_phone_contact.text.toString().trim {it <= ' '}
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(BuildConfig.DBK)
         progressBar.visibility = View.INVISIBLE
@@ -97,8 +100,10 @@ class TelNumberActivity : AppCompatActivity() {
                 } else {
                     Log.d(TAG, "signInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        Log.d(TAG, "FirebaseAuthInvalidCredentialsException: ${task.exception.toString()}")
                     }
                 }
             }
+
     }
 }
