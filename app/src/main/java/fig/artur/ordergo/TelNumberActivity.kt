@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -31,7 +32,7 @@ class TelNumberActivity : AppCompatActivity() {
         number = et_phone_contact.text.toString().trim {it <= ' '}
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(BuildConfig.DBK)
-        progressBar.visibility = View.INVISIBLE
+        progressBar2.visibility = View.INVISIBLE
 
         btn_continue.setOnClickListener{
             val countrycode : String = et_country_code.text.toString().trim {it <= ' '}
@@ -39,7 +40,7 @@ class TelNumberActivity : AppCompatActivity() {
 
             if(countrycodehandling != '+'){
                 number = "+"+"$countrycode"+"$number"
-                progressBar.visibility = View.VISIBLE
+                progressBar2.visibility = View.VISIBLE
             }else if(countrycode.length < 4 || number.isEmpty()){
                 et_country_code.error = "ERROR! Country code have 3 digits. Example: +999"
             }else if(number.length > 10 || number.length < 9 || number.isEmpty()){
@@ -80,7 +81,7 @@ class TelNumberActivity : AppCompatActivity() {
             intent.putExtra("resendToken", token)
             intent.putExtra("phoneNumber", number)
             startActivity(intent)
-            progressBar.visibility = View.INVISIBLE
+            progressBar2.visibility = View.INVISIBLE
         }
     }
 
@@ -96,7 +97,7 @@ class TelNumberActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this@TelNumberActivity, MainActivity::class.java))
                 } else {
                     Log.d(TAG, "signInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {

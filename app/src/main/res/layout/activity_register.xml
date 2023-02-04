@@ -6,6 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_register_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Username"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <EditText
+            android:id="@+id/et_username_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            tools:text="Username" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/et_username_register4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        tools:text="Username" />
+
     <FrameLayout
         android:id="@+id/fl_header_image"
         android:layout_width="wrap_content"
@@ -39,13 +71,13 @@
         app:layout_constraintTop_toBottomOf="@+id/fl_header_image" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_register_username"
+        android:id="@+id/til_register_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="16dp"
-        android:hint="Username"
+        android:hint="Phone number"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -55,11 +87,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         <EditText
-            android:id="@+id/et_username_register"
+            android:id="@+id/et_phone_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            tools:text="Username" />
+            android:inputType="phone"
+            tools:text="+98712345679" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,6 +119,8 @@
             tools:text="E-mail" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_register_password"
@@ -121,7 +155,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:hint="Confirm Password"
+        android:hint="Confirm password"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
