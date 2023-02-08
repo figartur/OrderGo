@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -31,7 +30,7 @@ class TelNumberActivity : AppCompatActivity() {
 
         number = et_phone_contact.text.toString().trim {it <= ' '}
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance(BuildConfig.DBK)
+        database = FirebaseDatabase.getInstance("https://ordergo-1db78-default-rtdb.europe-west1.firebasedatabase.app/")
         progressBar2.visibility = View.INVISIBLE
 
         btn_continue.setOnClickListener{
@@ -40,6 +39,7 @@ class TelNumberActivity : AppCompatActivity() {
 
             if(countrycodehandling != '+'){
                 number = "+"+"$countrycode"+"$number"
+                OptionsAuth()
                 progressBar2.visibility = View.VISIBLE
             }else if(countrycode.length < 4 || number.isEmpty()){
                 et_country_code.error = "ERROR! Country code have 3 digits. Example: +999"
@@ -47,15 +47,21 @@ class TelNumberActivity : AppCompatActivity() {
                 et_country_code.error = "ERROR! Phone number have 9 digits."
             }else{
                 number = "$countrycode"+"$number"
-                val options = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber(number)
-                    .setTimeout(60L, TimeUnit.SECONDS)
-                    .setActivity(this)
-                     .setCallbacks(callbacks)
-                    .build()
-                PhoneAuthProvider.verifyPhoneNumber(options)
+                OptionsAuth()
+                progressBar2.visibility = View.VISIBLE
             }
         }
+
+    }
+
+    private fun OptionsAuth() {
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(number)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(callbacks)
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {

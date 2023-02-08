@@ -38,7 +38,7 @@ class VerifyNumActivity : AppCompatActivity() {
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance(BuildConfig.DBK)
+        database = FirebaseDatabase.getInstance("https://ordergo-1db78-default-rtdb.europe-west1.firebasedatabase.app/")
 
         progressBar.visibility = View.INVISIBLE
         addTextChangeListener()
