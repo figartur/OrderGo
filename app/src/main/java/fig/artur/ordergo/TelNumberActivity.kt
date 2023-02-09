@@ -54,14 +54,12 @@ class TelNumberActivity : AppCompatActivity() {
             .setCallbacks(callbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
-        println("A")
     }
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
             signInWithPhoneAuthCredential(credential)
-            println("B")
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
@@ -83,7 +81,6 @@ class TelNumberActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        println("D")
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
