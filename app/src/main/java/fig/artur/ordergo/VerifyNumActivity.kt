@@ -24,7 +24,6 @@ class VerifyNumActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : FirebaseDatabase
-
     private lateinit var OTP : String
     private lateinit var resendToken : PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber : String
@@ -40,7 +39,6 @@ class VerifyNumActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(BuildConfig.DBK)
 
-        progressBar.visibility = View.INVISIBLE
         addTextChangeListener()
         resendOTPvVisibility()
 
@@ -58,7 +56,6 @@ class VerifyNumActivity : AppCompatActivity() {
                     val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
                         OTP, typedOTP
                     )
-                    progressBar.visibility = View.VISIBLE
                     signInWithPhoneAuthCredential(credential)
                 }else{
                     Toast.makeText(this, "Enter the correct verification code.", Toast.LENGTH_SHORT).show()
@@ -123,7 +120,6 @@ class VerifyNumActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    progressBar.visibility = View.VISIBLE
                     Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
@@ -172,10 +168,6 @@ class VerifyNumActivity : AppCompatActivity() {
         }
 
     }
-
-
-    //TODO("CONFIGURE PHONE AUTH: https://www.youtube.com/watch?v=zKa14ULHGBQ&ab_channel=CodingSTUFF")
-    //22:27
 
 
 

@@ -10,9 +10,15 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var firebaseUser: FirebaseUser
+    private lateinit var auth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        auth = FirebaseAuth.getInstance()
 
         //TODO("Change e-mail et, user can log in with phone, username or email")
 
@@ -41,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                         .addOnCompleteListener { task ->
 
                             if (task.isSuccessful) {
-                                val firebaseUser: FirebaseUser = task.result!!.user!!
+                                firebaseUser = task.result!!.user!!
                                 Toast.makeText(
                                     this@LoginActivity,
                                     "Successful logged in!",
@@ -76,5 +82,12 @@ class LoginActivity : AppCompatActivity() {
             "Please complete all required fields!",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun onStart(){
+        super.onStart()
+        if(auth.currentUser != null){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 }

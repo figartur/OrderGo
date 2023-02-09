@@ -57,10 +57,10 @@ class RegisterActivity : AppCompatActivity() {
             }else if(confpassword != password){
                 et_confirm_password_register.error = "ERROR! Password not matched, try again."
             }else{
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ it ->
                     if(it.isSuccessful){
                         val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
-                        val users : Users = Users(username, email, null, auth.currentUser!!.uid)
+                        val users : Users = Users(username=username, email=email,  uid=auth.currentUser!!.uid)
 
                         databaseRef.setValue(users).addOnCompleteListener{
                             if(it.isSuccessful){
@@ -75,53 +75,8 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
     }
+
 }
