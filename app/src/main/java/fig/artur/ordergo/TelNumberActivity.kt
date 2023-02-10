@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_tel_number.*
 import java.util.concurrent.TimeUnit
 
@@ -23,7 +24,6 @@ class TelNumberActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tel_number)
 
-        number = " "
         auth = FirebaseAuth.getInstance()
 
         btn_continue.setOnClickListener{
@@ -32,15 +32,19 @@ class TelNumberActivity : AppCompatActivity() {
             val countrycodehandling: Char = countrycode[0]
 
             if(countrycodehandling != '+'){
-                number = "+$countrycode $num"
+                number = "+$countrycode$num"
                 Toast.makeText(this, "$number", Toast.LENGTH_SHORT).show()
                 OptionsAuth()
-            }else if(countrycode.length < 4 || number.isEmpty()){
-                et_country_code.error = "ERROR! Country code have 3 digits. Example: +999"
-            }else if(number.length > 10 || number.length < 9 || number.isEmpty()){
-                et_country_code.error = "ERROR! Phone number have 9 digits."
+            }else if(countrycode.length < 4){
+                et_country_code.error = "ERROR! The country code has a maximum of 3 digits. Example: +999"
+            }else if(num.length > 12 || num.length < 4){
+                et_country_code.error = "ERROR! The phone number have between 4 and 12 numbers."
+            }else if(num.isEmpty()){
+                et_phone_contact.error = "ERROR! Enter the phone number!"
+            }else if(countrycode.isEmpty()){
+                et_country_code.error = "ERROR! Enter the country code!"
             }else{
-                number = "$countrycode $num"
+                number = "$countrycode$num"
                 OptionsAuth()
             }
         }
@@ -54,6 +58,22 @@ class TelNumberActivity : AppCompatActivity() {
             .setCallbacks(callbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@TelNumberActivity, MainActivity::class.java))
+                } else {
+                    Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        Log.d("TAG", "FirebaseAuthInvalidCredentialsException: ${task.exception.toString()}")
+                    }
+                }
+            }
+
     }
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -80,19 +100,4 @@ class TelNumberActivity : AppCompatActivity() {
         }
     }
 
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@TelNumberActivity, MainActivity::class.java))
-                } else {
-                    Log.d(TAG, "signInWithPhoneAuthCredential: ${task.exception.toString()}")
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        Log.d(TAG, "FirebaseAuthInvalidCredentialsException: ${task.exception.toString()}")
-                    }
-                }
-            }
-
-    }
 }

@@ -10,9 +10,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import android.widget.*
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -37,7 +35,7 @@ class VerifyNumActivity : AppCompatActivity() {
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance("https://ordergo-1db78-default-rtdb.europe-west1.firebasedatabase.app/")
+        database = FirebaseDatabase.getInstance(BuildConfig.DBK)
 
         addTextChangeListener()
         resendOTPvVisibility()
@@ -107,10 +105,7 @@ class VerifyNumActivity : AppCompatActivity() {
             }
         }
 
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
+        override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
             OTP = verificationId
             resendToken = token
         }
