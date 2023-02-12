@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var auth : FirebaseAuth
-    private lateinit var database : FirebaseDatabase
     private val emailPattern = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +20,6 @@ class RegisterActivity : AppCompatActivity() {
         tv_login.setOnClickListener{
              onBackPressed()
         }
-
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance(BuildConfig.DBK)
 
         btn_register.setOnClickListener {
             val username: String = et_username_register.text.toString().trim()
@@ -57,22 +52,11 @@ class RegisterActivity : AppCompatActivity() {
             }else if(confpassword != password){
                 et_confirm_password_register.error = "ERROR! Password not matched, try again."
             }else{
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ it ->
-                    if(it.isSuccessful){
-                        val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
-                        val users : Users = Users(username=username, email=email,  uid=auth.currentUser!!.uid)
-
-                        databaseRef.setValue(users).addOnCompleteListener{
-                            if(it.isSuccessful){
-                                startActivity(Intent(this@RegisterActivity, TelNumberActivity::class.java))
-                            }else{
-                                Toast.makeText(this, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }else{
-                        Toast.makeText(this, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                val intent = Intent(this@RegisterActivity, TelNumberActivity::class.java)
+                intent.putExtra("username", username)
+                intent.putExtra("email", email)
+                intent.putExtra("password", password)
+                startActivity(intent)
             }
 
         }

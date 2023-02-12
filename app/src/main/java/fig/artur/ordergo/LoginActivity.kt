@@ -20,8 +20,6 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        //TODO("Change e-mail et, user can log in with phone, username or email")
-
         tv_register.setOnClickListener{
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
@@ -48,27 +46,11 @@ class LoginActivity : AppCompatActivity() {
 
                             if (task.isSuccessful) {
                                 firebaseUser = task.result!!.user!!
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Successful logged in!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this@LoginActivity,"Successful logged in!", Toast.LENGTH_SHORT).show()
 
-                                val intent =
-                                    Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("user_id",
-                                    FirebaseAuth.getInstance().currentUser!!.uid)
-                                intent.putExtra("email_id", email)
-                                startActivity(intent)
-                                finish()
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             } else {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "ERROR! LOGIN FAILED. PLEASE TRY AGAIN LATER.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this@LoginActivity,"ERROR! LOGIN FAILED. PLEASE TRY AGAIN LATER.", Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
@@ -77,11 +59,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun emptyField(){
-        Toast.makeText(
-            this@LoginActivity,
-            "Please complete all required fields!",
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(this@LoginActivity,"Please complete all required fields!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStart(){

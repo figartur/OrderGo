@@ -19,10 +19,17 @@ class TelNumberActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var number : String
+    private lateinit var username : String
+    private lateinit var password : String
+    private lateinit var email : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tel_number)
+
+        username = intent.getStringExtra("username")!!
+        password = intent.getStringExtra("password")!!
+        email = intent.getStringExtra("email")!!
 
         auth = FirebaseAuth.getInstance()
 
@@ -33,7 +40,6 @@ class TelNumberActivity : AppCompatActivity() {
 
             if(countrycodehandling != '+'){
                 number = "+$countrycode$num"
-                Toast.makeText(this, "$number", Toast.LENGTH_SHORT).show()
                 OptionsAuth()
             }else if(countrycode.length < 4){
                 et_country_code.error = "ERROR! The country code has a maximum of 3 digits. Example: +999"
@@ -91,11 +97,13 @@ class TelNumberActivity : AppCompatActivity() {
         }
 
         override fun onCodeSent( verificationId: String, token: PhoneAuthProvider.ForceResendingToken ) {
-            println("C")
             val intent = Intent(this@TelNumberActivity, VerifyNumActivity::class.java)
             intent.putExtra("OTP", verificationId)
             intent.putExtra("resendToken", token)
             intent.putExtra("phoneNumber", number)
+            intent.putExtra("username", username)
+            intent.putExtra("email", email)
+            intent.putExtra("password", password)
             startActivity(intent)
         }
     }

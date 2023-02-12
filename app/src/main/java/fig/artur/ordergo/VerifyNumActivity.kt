@@ -25,6 +25,9 @@ class VerifyNumActivity : AppCompatActivity() {
     private lateinit var OTP : String
     private lateinit var resendToken : PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber : String
+    private lateinit var username : String
+    private lateinit var password : String
+    private lateinit var email : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,10 @@ class VerifyNumActivity : AppCompatActivity() {
         OTP = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
         phoneNumber = intent.getStringExtra("phoneNumber")!!
+        username = intent.getStringExtra("username")!!
+        password = intent.getStringExtra("password")!!
+        email = intent.getStringExtra("email")!!
+
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(BuildConfig.DBK)
@@ -114,18 +121,38 @@ class VerifyNumActivity : AppCompatActivity() {
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
+                val delUserNum = FirebaseAuth.getInstance().currentUser
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
-                    val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
-                    val users : Users = Users(phone = "${phoneNumber}")
-                    databaseRef.setValue(users).addOnCompleteListener{
+
+                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ it ->
                         if(it.isSuccessful){
-                            startActivity(Intent(this@VerifyNumActivity, TelNumberActivity::class.java))
+                            val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
+                            val users : Users = Users(username=username, email=email,  phone=phoneNumber ,uid=auth.currentUser!!.uid)
+
+                            databaseRef.setValue(users).addOnCompleteListener{
+                                if(it.isSuccessful){
+                                    startActivity(Intent(this@VerifyNumActivity, MainActivity::class.java))
+                                }else{
+                                    val delUser = FirebaseAuth.getInstance().currentUser
+                                    delUserNum?.delete()?.addOnCompleteListener { task ->
+                                        if(task.isSuccessful){
+                                            delUser?.delete()?.addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    Toast.makeText(this, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }else{
-                            Toast.makeText(this, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                            delUserNum?.delete()?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(this, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }}
                 } else {
                     Log.d(ContentValues.TAG, "signInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {

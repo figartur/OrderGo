@@ -68,7 +68,7 @@
             android:id="@+id/et_country_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="number|phone"
             tools:text="+999" />
 
     </com.google.android.material.textfield.TextInputLayout>
