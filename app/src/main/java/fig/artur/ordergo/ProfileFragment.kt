@@ -19,8 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var auth : FirebaseAuth
@@ -30,17 +29,6 @@ class ProfileFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-
-            auth = FirebaseAuth.getInstance()
-
-            //TODO("LOGOUT BUTTON IS NOT WORKING")
-
-            btn_logout.setOnClickListener {
-                FirebaseAuth.getInstance().signOut()
-
-                val intent = Intent(activity, LoginActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
 
@@ -50,6 +38,13 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
+        auth = FirebaseAuth.getInstance()
+        btn_logout.setOnClickListener {
+            auth.signOut()
+
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {
