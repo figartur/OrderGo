@@ -25,10 +25,10 @@
             android:exported="false"
             android:label="@string/title_activity_main_test" />
         <activity
-            android:name=".VerifyNumActivity"
+            android:name=".logreg.VerifyNumActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".logreg.LoginActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -41,21 +41,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecoverPasswordActivity"
+            android:name=".logreg.RecoverPasswordActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".TelNumberActivity"
+            android:name=".logreg.TelNumberActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".logreg.RegisterActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

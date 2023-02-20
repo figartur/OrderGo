@@ -1,8 +1,9 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import fig.artur.ordergo.R
 import kotlinx.android.synthetic.main.activity_register.*
 
 

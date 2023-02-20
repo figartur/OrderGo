@@ -1,4 +1,4 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import fig.artur.ordergo.R
 import kotlinx.android.synthetic.main.activity_recover_password.*
 
 class RecoverPasswordActivity : AppCompatActivity() {

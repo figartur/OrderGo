@@ -1,4 +1,4 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 import android.content.ContentValues
 import android.content.Intent
@@ -15,6 +15,9 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.database.FirebaseDatabase
+import fig.artur.ordergo.BuildConfig
+import fig.artur.ordergo.MainActivity
+import fig.artur.ordergo.R
 import kotlinx.android.synthetic.main.activity_verify_num.*
 import java.util.concurrent.TimeUnit
 

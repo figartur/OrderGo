@@ -1,4 +1,4 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 data class Users(
     var username : String? = null,

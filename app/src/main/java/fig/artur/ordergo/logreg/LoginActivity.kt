@@ -1,4 +1,4 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,8 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import fig.artur.ordergo.MainActivity
+import fig.artur.ordergo.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {

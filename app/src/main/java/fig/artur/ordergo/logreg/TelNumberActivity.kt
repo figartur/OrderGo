@@ -1,4 +1,4 @@
-package fig.artur.ordergo
+package fig.artur.ordergo.logreg
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,8 @@ import android.widget.Toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import fig.artur.ordergo.MainActivity
+import fig.artur.ordergo.R
 import kotlinx.android.synthetic.main.activity_tel_number.*
 import java.util.concurrent.TimeUnit
 
