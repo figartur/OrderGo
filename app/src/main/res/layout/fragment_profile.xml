@@ -51,19 +51,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_profile_frag" />
+
     <Button
         android:id="@+id/btn_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|fill_vertical"
+        android:layout_marginTop="90dp"
         android:backgroundTint="@color/mossgreen"
         android:text="Notifications"
         android:textColor="@color/themeblack"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_following"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_profile_frag" />
+
     <Button
         android:id="@+id/btn_following"
         android:layout_width="match_parent"
@@ -75,9 +78,10 @@
         android:textColor="@color/themeblack"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_notifications" />
+
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
@@ -89,8 +93,8 @@
         android:textColor="@color/themeblack"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_following" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
