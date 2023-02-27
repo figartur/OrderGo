@@ -2,22 +2,21 @@ package fig.artur.ordergo.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import fig.artur.ordergo.BuildConfig
 import fig.artur.ordergo.databinding.FragmentProfileBinding
 import fig.artur.ordergo.logreg.LoginActivity
+import fig.artur.ordergo.BuildConfig
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
@@ -40,36 +39,25 @@ class ProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(BuildConfig.DBK)
 
-        if(auth.currentUser != null){
-            val myRef = database.getReference("users")
+        if(auth.currentUser != null) {
+            val usersRef = database.getReference("users")
+            val currentUserRef = usersRef.child(auth.currentUser!!.uid)
 
-            val currentUserUid = auth.currentUser?.uid
-            val query = myRef.orderByChild("uid").equalTo(currentUserUid)
-
-            var email = ""
-            var phone = ""
-            var username = ""
-
-            query.addValueEventListener(object : ValueEventListener {
+            currentUserRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (childSnapshot in dataSnapshot.children) {
-                        email = childSnapshot.child("email").value.toString()
-                        phone = childSnapshot.child("phone").value.toString()
-                        username = childSnapshot.child("username").value.toString()
-                    }
-                }
+                    val email = dataSnapshot.child("email").getValue(String::class.java)
+                    val username = dataSnapshot.child("username").getValue(String::class.java)
+                    val phone = dataSnapshot.child("phone").getValue(String::class.java)
 
+                    username_profile_frag.text = "$username"
+                    email_profile_frag.text = "$email"
+                    phone_profile_frag.text = "$phone"
+
+                }
                 override fun onCancelled(error: DatabaseError) {
-                    Log.w("TAG", "Failed to read value.", error.toException())
+                    Toast.makeText(context, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
                 }
             })
-            val txtusername : TextView = binding.usernameProfileFrag
-            val txtemail : TextView = binding.emailProfileFrag
-            val txtphone : TextView = binding.phoneProfileFrag
-
-            txtusername.text = username
-            txtemail.text = email
-            txtphone.text = phone
         }else{
             Toast.makeText(context, "ERROR! Something went wrong, try again.", Toast.LENGTH_SHORT).show()
         }
