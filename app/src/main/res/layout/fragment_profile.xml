@@ -53,11 +53,26 @@
         app:layout_constraintTop_toBottomOf="@+id/email_profile_frag" />
 
     <Button
-        android:id="@+id/btn_notifications"
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|fill_vertical"
         android:layout_marginTop="90dp"
+        android:backgroundTint="@color/mossgreen"
+        android:text="SAVE"
+        android:textColor="@color/themeblack"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_profile_frag" />
+
+    <Button
+        android:id="@+id/btn_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|fill_vertical"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/mossgreen"
         android:text="Notifications"
         android:textColor="@color/themeblack"
@@ -65,7 +80,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_profile_frag" />
+        app:layout_constraintTop_toBottomOf="@id/btn_save" />
 
     <Button
         android:id="@+id/btn_following"
