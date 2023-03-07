@@ -131,7 +131,7 @@ class VerifyNumActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ it ->
                         if(it.isSuccessful){
                             val databaseRef = database.reference.child("users").child(auth.currentUser!!.uid)
-                            val users : Users = Users(username=username, email=email,  phone=phoneNumber ,uid=auth.currentUser!!.uid)
+                            val users : Users = Users(username=username, email=email,  phone=phoneNumber, profilepic=null, uid=auth.currentUser!!.uid)
 
                             databaseRef.setValue(users).addOnCompleteListener{
                                 if(it.isSuccessful){

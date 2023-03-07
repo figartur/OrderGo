@@ -118,6 +118,12 @@ class ProfileFragment : Fragment() {
         val usersRef = database.getReference("Users")
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
         val userRef = usersRef.child(currentUserUid!!)
+
+        val updates = mapOf<String, Any>(
+            "profilepic" to "$imgUrl"
+        )
+
+        userRef.updateChildren(updates)
         //TODO("ADD IMG URL IN USERS (DATABASE)")
     }
 
