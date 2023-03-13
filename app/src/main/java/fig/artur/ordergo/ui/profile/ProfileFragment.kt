@@ -84,10 +84,10 @@ class ProfileFragment : Fragment() {
                         txtemail.text = email
                         txtphone.text = phone
 
-                        Glide.with(this@ProfileFragment)
+                        /*Glide.with(this@ProfileFragment)
                             .load(storageReference)
                             .placeholder(R.drawable.userimg)
-                            .into(binding.profileFragImage)
+                            .into(binding.profileFragImage)*/
                     }
                 }
 
